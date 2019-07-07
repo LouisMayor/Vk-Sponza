@@ -5,6 +5,18 @@ extern Logger             g_Logger;
 
 bool VkApp::m_force_close = false;
 
+VkApp* VkApp::m_instance = nullptr;
+
+VkApp::VkApp()
+{
+	VkApp::m_instance = this;
+}
+
+VkApp* VkApp::Instance()
+{
+	return m_instance;
+}
+
 void VkApp::Start()
 {
 	m_input_manager.InitialiseInput(g_VkGenerator.WindowHdle());
@@ -18,6 +30,9 @@ void VkApp::Start()
 #endif
 
 	glfwSetInputMode(g_VkGenerator.WindowHdle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+	m_camera = player_fps_camera_config;
+	m_active_camera = &m_camera;
 }
 
 void VkApp::Update(float _delta)
@@ -26,6 +41,7 @@ void VkApp::Update(float _delta)
 	m_total_time += _delta;
 
 	m_input_manager.Update();
+	m_active_camera->Update(_delta);
 
 	UpdateWindowTitle();
 }

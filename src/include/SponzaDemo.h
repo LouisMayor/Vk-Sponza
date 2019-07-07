@@ -11,9 +11,6 @@ public:
 
 	VkSponzaDemo();
 
-	explicit VkSponzaDemo(const VkApp& _app_instance) : VkDemo(_app_instance)
-	{ }
-
 	VkSponzaDemo(const VkSponzaDemo& _other) = delete;
 
 	VkSponzaDemo(VkSponzaDemo&& _other) noexcept = delete;

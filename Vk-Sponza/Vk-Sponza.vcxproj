@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\include\App.h" />
     <ClInclude Include="..\src\include\Buffer.h" />
+    <ClInclude Include="..\src\include\Camera.h" />
     <ClInclude Include="..\src\include\Command.h" />
     <ClInclude Include="..\src\include\DepthBuffer.h" />
     <ClInclude Include="..\src\include\DescriptorPool.h" />
@@ -190,6 +191,19 @@
     <ClInclude Include="..\src\include\Vk-Generator\VkGenerator.ipp" />
     <ClInclude Include="..\src\include\VulkanHelpers.h" />
     <ClInclude Include="..\src\include\VulkanObjects.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\shaders\forward_tex.frag" />
+    <None Include="..\assets\shaders\forward_Tranform_tex.vert" />
+    <None Include="..\assets\shaders\inputs.glsl" />
+    <None Include="..\assets\shaders\Tranform.vert" />
+    <None Include="..\assets\shaders\Tranform_tex.vert" />
+    <None Include="..\assets\shaders\triangle_no_mesh.frag" />
+    <None Include="..\assets\shaders\triangle_no_mesh.vert" />
+    <None Include="..\assets\shaders\ui.frag" />
+    <None Include="..\assets\shaders\ui.vert" />
+    <None Include="..\assets\shaders\unlit.frag" />
+    <None Include="..\assets\shaders\unlit_tex.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

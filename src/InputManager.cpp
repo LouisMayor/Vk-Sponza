@@ -2,6 +2,7 @@
 
 #include "include/glfw-3.2.1.bin.WIN32/include/GLFW/glfw3.h"
 #include "include\imgui-1.70\imgui.h"
+#include "include/App.h"
 
 EKeyState g_AllKeyStates[int(EKeyCodes::NumOfKeyCodes)];
 
@@ -13,6 +14,7 @@ static GLFWmousebuttonfun g_PrevUserCallbackMousebutton = nullptr;
 static GLFWscrollfun      g_PrevUserCallbackScroll      = nullptr;
 static GLFWkeyfun         g_PrevUserCallbackKey         = nullptr;
 static GLFWcharfun        g_PrevUserCallbackChar        = nullptr;
+static GLFWcursorposfun   g_PrevUsercallbackCursorPos   = nullptr;
 
 void ImGui_ImplGlfw_MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
@@ -67,6 +69,17 @@ void ImGui_ImplGlfw_KeyCallback(GLFWwindow* window, int key, int scancode, int a
 	}
 }
 
+static void MouseControlCallback(GLFWwindow* window, double _x, double _y)
+{
+	Camera* user_camera = VkApp::Instance()->ActiveCamera();
+	if (user_camera == nullptr)
+	{
+		return;
+	}
+
+	user_camera->UpdateMouseRotation(glm::vec2(_x, _y));
+}
+
 void ImGui_ImplGlfw_CharCallback(GLFWwindow* window, unsigned int c)
 {
 	if (g_PrevUserCallbackChar != NULL)
@@ -80,7 +93,7 @@ static void ImGui_ImplGlfw_UpdateMousePosAndButtons()
 {
 	// Update buttons
 	ImGuiIO& io = ImGui::GetIO();
-	for (int i = 0 ; i < IM_ARRAYSIZE(io.MouseDown) ; i++)
+	for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++)
 	{
 		// If a mouse press event came, always pass it as "mouse held this frame", so we don't miss click-release events that are shorter than 1 frame.
 		io.MouseDown[i]       = g_MouseJustPressed[i] || glfwGetMouseButton(g_window, i) != 0;
@@ -136,7 +149,7 @@ static void ImGui_ImplGlfw_UpdateMouseCursor()
 
 void InputManager::InitialiseInput(GLFWwindow* _window)
 {
-	for (auto i = 0 ; i < int(EKeyCodes::NumOfKeyCodes) ; ++i)
+	for (auto i = 0; i < int(EKeyCodes::NumOfKeyCodes); ++i)
 	{
 		g_AllKeyStates[i] = EKeyState::NotPressed;
 	}
@@ -156,6 +169,7 @@ void InputManager::InitialiseInput(GLFWwindow* _window)
 	g_PrevUserCallbackScroll      = glfwSetScrollCallback(_window, ImGui_ImplGlfw_ScrollCallback);
 	g_PrevUserCallbackKey         = glfwSetKeyCallback(_window, ImGui_ImplGlfw_KeyCallback);
 	g_PrevUserCallbackChar        = glfwSetCharCallback(_window, ImGui_ImplGlfw_CharCallback);
+	g_PrevUsercallbackCursorPos   = glfwSetCursorPosCallback(_window, MouseControlCallback);
 
 	ImGuiIO& io = ImGui::GetIO();
 	io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
@@ -191,6 +205,18 @@ void InputManager::InitialiseInput(GLFWwindow* _window)
 	io.KeyMap[ImGuiKey_X]          = GLFW_KEY_X;
 	io.KeyMap[ImGuiKey_Y]          = GLFW_KEY_Y;
 	io.KeyMap[ImGuiKey_Z]          = GLFW_KEY_Z;
+}
+
+std::unique_ptr<InputManager> InputManager::m_instance = std::make_unique<InputManager>();
+
+InputManager* InputManager::Instance()
+{
+	if (m_instance == nullptr)
+	{
+		m_instance = std::make_unique<InputManager>();
+	}
+
+	return m_instance.get();
 }
 
 bool InputManager::KeyHeld(EKeyCodes _key_code)

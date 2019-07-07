@@ -9,9 +9,6 @@ public:
 
 	VkDemo() = default;
 
-	explicit VkDemo(const VkApp& _app_instance) : m_app_instance(_app_instance)
-	{}
-
 	VkDemo(const VkDemo& _other) = delete;
 
 	VkDemo(VkDemo&& _other) noexcept = delete;

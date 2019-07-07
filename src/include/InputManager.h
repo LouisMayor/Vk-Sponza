@@ -107,6 +107,7 @@ enum class EKeyCodes : int
 class InputManager
 {
 public:
+
 	void InitialiseInput(GLFWwindow*);
 
 	void Update();
@@ -116,4 +117,10 @@ public:
 	bool KeyHit(EKeyCodes _keyCode);
 
 	bool KeyHeld(EKeyCodes _key_code);
+
+	static InputManager* Instance();
+
+private:
+
+	static std::unique_ptr<InputManager> m_instance;
 };

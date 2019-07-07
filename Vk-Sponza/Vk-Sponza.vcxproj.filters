@@ -190,5 +190,43 @@
     <ClInclude Include="..\src\include\Vk-Generator\VkGenerator.ipp">
       <Filter>Header Files\Vk-Generator</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\include\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\shaders\forward_tex.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\forward_Tranform_tex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\inputs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\Tranform.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\Tranform_tex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\triangle_no_mesh.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\triangle_no_mesh.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\ui.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\ui.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\unlit.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\unlit_tex.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
