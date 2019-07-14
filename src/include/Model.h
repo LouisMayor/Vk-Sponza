@@ -142,12 +142,12 @@ public:
 
 	void Rotation(const glm::vec3 _rotation)
 	{
-		m_mesh.Position(_rotation);
+		m_mesh.Rotation(_rotation);
 	}
 
 	void Scale(const glm::vec3 _scale)
 	{
-		m_mesh.Position(_scale);
+		m_mesh.Scale(_scale);
 	}
 
 private:

@@ -56,12 +56,14 @@ void UI::Recreate(vk::Device _device, uint32_t _width, uint32_t _height, GLFWwin
 	m_index_buffer.Destroy(_device);
 }
 
+ImGuiContext* context = nullptr;
+
 void UI::Init(uint32_t _width, uint32_t _height, GLFWwindow* _window)
 {
 	m_width  = static_cast<float>(_width);
 	m_height = static_cast<float>(_height);
 
-	ImGui::CreateContext();
+	context = ImGui::CreateContext();
 
 	ImGuiStyle& style                    = ImGui::GetStyle();
 	style.Colors[ImGuiCol_TitleBg]       = ImVec4(1.0f, 0.0f, 0.0f, 0.6f);
@@ -206,6 +208,11 @@ void UI::LoadResources(vk::Device              _device,
 
 void UI::PrepNextFrame(float _delta, float _total_time)
 {
+	if (context == nullptr)
+	{
+		return;
+	}
+
 	ImGui::NewFrame();
 
 	// load but not save
@@ -251,6 +258,11 @@ void UI::UpdateSettings()
 
 void UI::Update(vk::Device _device, vk::PhysicalDevice _physical_device)
 {
+	if (context == nullptr)
+	{
+		return;
+	}
+
 	const ImDrawData* imDrawData = ImGui::GetDrawData();
 
 	const vk::DeviceSize vertex_buffer_size = imDrawData->TotalVtxCount * sizeof(ImDrawVert);
@@ -301,6 +313,11 @@ void UI::Update(vk::Device _device, vk::PhysicalDevice _physical_device)
 
 void UI::Draw(VkRes::Command _cmd, int _cmd_index)
 {
+	if (context == nullptr)
+	{
+		return;
+	}
+
 	ImGuiIO& io    = ImGui::GetIO();
 	io.DisplaySize = ImVec2(m_width, m_height);
 
