@@ -101,7 +101,7 @@ enum class EKeyCodes : int
 
 	KeyEsc = GLFW_KEY_ESCAPE,
 
-	NumOfKeyCodes = 100
+	NumOfKeyCodes = GLFW_KEY_LAST
 };
 
 class InputManager

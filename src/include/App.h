@@ -21,7 +21,7 @@ public:
 
 	void SetWindowTitle(std::string);
 
-	Camera* ActiveCamera()
+	Camera* ActiveCamera() const
 	{
 		return m_active_camera;
 	}
@@ -36,20 +36,23 @@ private:
 
 	bool Input();
 
+	void ToggleCursor();
+
 	static bool m_force_close;
 
 	InputManager m_input_manager;
 
 	Camera::CameraInfo player_fps_camera_config
 	{
-		0.0f,
-		10.0f,
-		glm::vec3(2.0f, 0.0f, 2.0f),
+		0.1f,
+		10000.0f,
+		70.0f,
+		glm::vec3(0.331336, 0.000000, -4.927723),
 		glm::vec3(0.0f),
 		ECameraType::FPS
 	};
 
-	Camera m_camera;
+	Camera  m_camera;
 	Camera* m_active_camera = nullptr;
 
 	static VkApp* m_instance;

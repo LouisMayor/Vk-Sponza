@@ -1,4 +1,5 @@
 #include "include/App.h"
+#include <imgui.h>
 
 extern VkGen::VkGenerator g_VkGenerator;
 extern Logger             g_Logger;
@@ -31,7 +32,7 @@ void VkApp::Start()
 
 	glfwSetInputMode(g_VkGenerator.WindowHdle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
-	m_camera = player_fps_camera_config;
+	m_camera        = player_fps_camera_config;
 	m_active_camera = &m_camera;
 }
 
@@ -86,8 +87,33 @@ void VkApp::Close()
 	glfwTerminate();
 }
 
+bool cursor_active = true;
+void VkApp::ToggleCursor()
+{
+	ImGuiIO& io = ImGui::GetIO();
+	cursor_active = !cursor_active;
+	glfwSetInputMode(g_VkGenerator.WindowHdle(), GLFW_CURSOR, cursor_active ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
+	m_active_camera->IgnoreMouse(cursor_active);
+	io.MouseDrawCursor = cursor_active;
+
+	if (cursor_active)
+	{	
+		int x = 0, y = 0;
+		glfwGetWindowSize(g_VkGenerator.WindowHdle(), &x, &y);
+
+		const glm::vec2 mid = glm::vec2(0.5f, 0.5f) * glm::vec2(x, y);
+		glfwSetCursorPos(g_VkGenerator.WindowHdle(), mid.x, mid.y);
+	}
+}
+
 bool VkApp::Input()
 {
 	glfwPollEvents();
+
+	if (m_input_manager.KeyHit(EKeyCodes::KeyT))
+	{
+		ToggleCursor();
+	}
+
 	return m_input_manager.KeyHit(EKeyCodes::KeyEsc);
 }

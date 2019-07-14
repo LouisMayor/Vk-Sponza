@@ -50,6 +50,8 @@ void VkSponzaDemo::Setup()
 
 	m_app_instance.SetWindowTitle("Vulkan Sponza Demo");
 	m_app_instance.Start();
+
+	m_app_instance.ActiveCamera()->SetProjection(glm::vec2(m_swapchain.Extent().width, m_swapchain.Extent().height));
 }
 
 void VkSponzaDemo::Run()
@@ -590,6 +592,8 @@ void VkSponzaDemo::RecreateSwapchain()
 		                                                                                 SponzaDemoSettings::Instance()->
 		                                                                                 GetSampleCount() :
 		                                                                                 vk::SampleCountFlagBits::e1);
+
+	m_app_instance.ActiveCamera()->SetProjection(glm::vec2(m_swapchain.Extent().width, m_swapchain.Extent().height));
 }
 
 void VkSponzaDemo::CreateDescriptorLayouts()
@@ -690,15 +694,12 @@ void VkSponzaDemo::UpdateBufferData(uint32_t _image_index, bool _resize)
 	{
 		if (m_cube_ubo.WantsPerFrameUpdate())
 		{
-			auto dims = m_swapchain.Extent();
+			glm::vec3 Position = glm::vec3(2.0f, 0.0f, -5.0f);
+			glm::mat4 m        = glm::translate(glm::mat4(1.0f), Position);
 
-			glm::vec3 Position = glm::vec3(0.0f, 0.0f, 0.0f);
-			glm::mat4 m = glm::translate(glm::mat4(1.0f), Position);
-			auto v = glm::lookAt(glm::vec3(2.0f, 0.0f, 2.0f), Position, glm::vec3(0.0f, 0.0f, 1.0f));
-			auto p = glm::perspective(glm::radians(45.0f), (float)dims.width / (float)dims.height, 0.1f, 10.0f);
-			p[1][1] *= -1;
+			m_cube_ubo.GetData(_image_index).mvp = m_app_instance.ActiveCamera()->Projection() *
+					m_app_instance.ActiveCamera()->View() * m;
 
-			m_cube_ubo.GetData(_image_index).mvp = p * v * m;
 			m_cube_ubo.GetData(_image_index).world = m;
 			m_cube_ubo.Map(g_VkGenerator.Device(), _image_index);
 		}

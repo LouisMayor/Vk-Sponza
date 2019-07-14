@@ -228,5 +228,11 @@
     <None Include="..\assets\shaders\unlit_tex.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\assets\shaders\debug_miplevel.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\debug_miplevel.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

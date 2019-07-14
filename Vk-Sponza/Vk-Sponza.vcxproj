@@ -193,6 +193,8 @@
     <ClInclude Include="..\src\include\VulkanObjects.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\assets\shaders\debug_miplevel.frag" />
+    <None Include="..\assets\shaders\debug_miplevel.vert" />
     <None Include="..\assets\shaders\forward_tex.frag" />
     <None Include="..\assets\shaders\forward_Tranform_tex.vert" />
     <None Include="..\assets\shaders\inputs.glsl" />

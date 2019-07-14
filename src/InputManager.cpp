@@ -248,6 +248,10 @@ EKeyState InputManager::ReportKeyState(EKeyCodes _key_code)
 
 void InputManager::Update()
 {
-	ImGui_ImplGlfw_UpdateMousePosAndButtons();
-	ImGui_ImplGlfw_UpdateMouseCursor();
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.MouseDrawCursor)
+	{
+		ImGui_ImplGlfw_UpdateMousePosAndButtons();
+		ImGui_ImplGlfw_UpdateMouseCursor();
+	}	
 }
