@@ -173,15 +173,15 @@ VkBool32 VkSponzaDemo::DebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT     
 
 void VkSponzaDemo::LoadAssets()
 {
-	Model cube(g_VkGenerator.Device(), g_VkGenerator.PhysicalDevice(), m_swapchain.ImageViews().size());
-	cube.SetTextureSupport<ERenderType::Diffuse>();
-	cube.LoadMesh(g_VkGenerator.Device(), g_VkGenerator.PhysicalDevice(), m_model_directory, "sponza.obj");
-	cube.LoadTexture(m_command, m_texture_directory, "texture.jpg");
+	Model sponza(g_VkGenerator.Device(), g_VkGenerator.PhysicalDevice(), m_swapchain.ImageViews().size());
+	sponza.SetTextureSupport<ERenderType::Diffuse>();
+	sponza.LoadMesh(g_VkGenerator.Device(), g_VkGenerator.PhysicalDevice(), m_model_directory, "sponza.obj");
+	sponza.LoadTexture(m_command, m_texture_directory, "texture.jpg");
 
-	cube.Position(glm::vec3(2.0f, 0.0f, -5.0f));
-	cube.Scale(glm::vec3(0.005f));
+	sponza.Position(glm::vec3(2.0f, 0.0f, -5.0f));
+	sponza.Scale(glm::vec3(0.005f));
 
-	m_render_list.emplace_back(cube);
+	m_render_list.emplace_back(sponza);
 }
 
 void VkSponzaDemo::SubmitQueue()
