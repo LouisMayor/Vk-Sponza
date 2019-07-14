@@ -178,6 +178,8 @@ void VkSponzaDemo::LoadAssets()
 	cube.LoadMesh(g_VkGenerator.Device(), g_VkGenerator.PhysicalDevice(), m_model_directory, "cube_normals.obj");
 	cube.LoadTexture(m_command, m_texture_directory, "texture.jpg");
 
+	cube.Position(glm::vec3(2.0f, 0.0f, -5.0f));
+
 	m_render_list.emplace_back(cube);
 }
 
@@ -694,13 +696,12 @@ void VkSponzaDemo::UpdateBufferData(uint32_t _image_index, bool _resize)
 	{
 		if (m_cube_ubo.WantsPerFrameUpdate())
 		{
-			glm::vec3 Position = glm::vec3(2.0f, 0.0f, -5.0f);
-			glm::mat4 m        = glm::translate(glm::mat4(1.0f), Position);
+			const glm::mat4 model_position = m_render_list[0].Matrix();
 
 			m_cube_ubo.GetData(_image_index).mvp = m_app_instance.ActiveCamera()->Projection() *
-					m_app_instance.ActiveCamera()->View() * m;
+					m_app_instance.ActiveCamera()->View() * model_position;
 
-			m_cube_ubo.GetData(_image_index).world = m;
+			m_cube_ubo.GetData(_image_index).world = model_position;
 			m_cube_ubo.Map(g_VkGenerator.Device(), _image_index);
 		}
 

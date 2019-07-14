@@ -110,9 +110,44 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& _ostream, const Model& _other);
 
-	Mesh& MeshInstance()
+	[[nodiscard]] Mesh& MeshInstance()
 	{
 		return m_mesh;
+	}
+
+	[[nodiscard]] glm::mat4x4 Matrix() const
+	{
+		return m_mesh.Matrix();
+	}
+
+	[[nodiscard]] glm::vec3 Position() const
+	{
+		return m_mesh.Position();
+	}
+
+	[[nodiscard]] glm::vec3 Rotation() const
+	{
+		return m_mesh.Rotation();
+	}
+
+	[[nodiscard]] glm::vec3 Scale() const
+	{
+		return m_mesh.Scale();
+	}
+
+	void Position(const glm::vec3 _position)
+	{
+		m_mesh.Position(_position);
+	}
+
+	void Rotation(const glm::vec3 _rotation)
+	{
+		m_mesh.Position(_rotation);
+	}
+
+	void Scale(const glm::vec3 _scale)
+	{
+		m_mesh.Position(_scale);
 	}
 
 private:
